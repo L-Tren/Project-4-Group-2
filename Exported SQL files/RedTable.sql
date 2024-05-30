@@ -1,8 +1,8 @@
--- Table: public.WhiteWine
+-- Table: public.RedWine
 
--- DROP TABLE IF EXISTS public."WhiteWine";
+-- DROP TABLE IF EXISTS public."RedWine";
 
-CREATE TABLE IF NOT EXISTS public."WhiteWine"
+CREATE TABLE IF NOT EXISTS public."RedWine"
 (
     id integer,
     type character varying(100) COLLATE pg_catalog."default",
@@ -17,10 +17,11 @@ CREATE TABLE IF NOT EXISTS public."WhiteWine"
     ph double precision,
     sulphates double precision,
     alcohol_wine double precision,
+    quality integer,
     quality_categorisation integer
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public."WhiteWine"
+ALTER TABLE IF EXISTS public."RedWine"
     OWNER to postgres;

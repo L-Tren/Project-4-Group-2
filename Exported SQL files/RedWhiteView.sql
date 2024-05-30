@@ -17,6 +17,7 @@ CREATE OR REPLACE VIEW public."Wines"
     "RedWine".ph,
     "RedWine".sulphates,
     "RedWine".alcohol_wine,
+    "RedWine".quality,
     "RedWine".quality_categorisation
    FROM "RedWine"
 UNION
@@ -33,6 +34,7 @@ UNION
     "WhiteWine".ph,
     "WhiteWine".sulphates,
     "WhiteWine".alcohol_wine,
+    "WhiteWine".quality,
     "WhiteWine".quality_categorisation
    FROM "WhiteWine";
 
