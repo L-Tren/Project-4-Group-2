@@ -2,7 +2,7 @@
 
 # Title
 
-![Image of hand holding grapes](Images/hands_grapes.jpg)
+![Image of hand holding grapes](Images/wine_glasses.jpg)
 
 ## 1. Group Members
 
@@ -30,7 +30,7 @@ While this project leverages an extensive dataset of over 6,000 records classifi
 
 ## 4. Instructions
 
-This analysis was based on CSV files downloaded from the UC Irvine Machine Learning Repository website (Cortez et al., 2009). 
+This analysis was based on CSV files downloaded from the UC Irvine Machine Learning Repository website (Cortez et al., 2009).
 
 To reproduce this project and navigate accordingly, please follow the steps below in the order they are presented:
 
@@ -40,21 +40,19 @@ To reproduce this project and navigate accordingly, please follow the steps belo
 4. Save combined data into a CSV file
 5. Create a new SQL Database in PostgreSQL.
 6. Create the tables in your new database using the following files from the SQL Files folder:
-    a. RedTable.sql
-    b. WhiteTable.sql
-    c. RedWhiteView.sql
+   a. RedTable.sql
+   b. WhiteTable.sql
+   c. RedWhiteView.sql
 7. Import the following CSV files:
    a. winequality-red.csv to the Red table
    b. winequality-white.csv to the White table
 8. Run the 3.RedWhiteView.sql using PostgreSQL.
 
-
 The _2.ml_model_code_wine.ipynb_ file connects to the SQL database. You must provide your username, password and port of the PostgreSQL server.
 
 Once it is successfully connected, the code will generate a combined wines DataFrame.
 
-This dataframe forms the basis of the machine learning model, refer to section 5 for futher details on the Data Model Implementation. 
-
+This dataframe forms the basis of the machine learning model, refer to section 5 for futher details on the Data Model Implementation.
 
 ## 5. Data Model Implementation
 
@@ -62,15 +60,15 @@ This dataframe forms the basis of the machine learning model, refer to section 5
 
 Numerous python scripts were engineered. The dataset was split into training (70%) and testing (30%) sets as per industry norms. The data was also converted to floats, to enable better precision and consistency assistig with ensuring compatibility with machine learning algorithms.The various models were trained on the training data with various levels of epochs.
 
-
 ### 5.2 The data is cleaned, normalised, and standardised prior to modelling
 
 The wines data frame is cleaned to remove columns not utilised by the machine learning model, being:
+
 - ID
 - Type
 - Quality
 
-Data is then split into features and target arrays. The X DataFrame contains all cleaned data  excluding the 'quality_categorisation' column, whilst the 'y' DataFrame contains the values of the 'quality_categorisation' column.
+Data is then split into features and target arrays. The X DataFrame contains all cleaned data excluding the 'quality_categorisation' column, whilst the 'y' DataFrame contains the values of the 'quality_categorisation' column.
 
 StandardScaler was utilised to transform the training and test datasets, helping the machine learning algorithm to adjust the standardized data to make it more reliable and easier to work with.
 
@@ -88,16 +86,15 @@ Numerous amounts of trial and error transpired using different machine learning 
 
 ### The model optimisation and evaluation process showing iterative changes made to the model and the resulting changes in model performance is documented in either a CSV/Excel table or in the Python script itself
 
-| Model                                    | Architecture                                                                                                                | Compilation                                                                                         | Training                                              |
-|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|-------------------------------------------------------|
-| **1. Initial Model**                     | - Three  layers with 12, 8, and 4 units <br> -  ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output  | - Optimizer: Adam<br> - Loss: Binary cross-entropy<br> - Metrics: Accuracy                        | - 100 epochs                                          |
-| **2. Model with One Less Hidden Layer**  | - Two  layers with 12 and 8 units <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output  | As per  Initial Model                                                                           | As per Initial Model                             |
-| **3. Model with Increased Units and Tanh Activation** | - Two  layers with 300 and 200 units <br> -  Tanh activation <br> - Output layer with 1 unit <br> - Sigmoid activation output | As per Initial Model                                                                           | As per Initial Model                            |
-| **4. Model with Increased Units, Tanh Activation, and L2 Regularization** | - Two  layers with 300 and 200 units <br> - Tanh activation <br> - L2 regularization<br> - Output layer with 1 unit <br> - Sigmoid activation output | As per Initial Model                                                                            | As per Initial Model                             |
-| **5. Model with Dropout and L2 Regularization** | - Three  layers with 120, 80, and 40 units <br> - ReLU activation <br> - L2 regularization <br> - Dropout<br> - Output layer with 1 unit <br> - Sigmoid activation output | As per Initial Model                                                                            | As per Initial Model                             |
-| **6. Model with One Less Hidden Layer and Batch Size** | - Two  layers with 12 and 8 units, <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output   | As per Initial Model                             | As per Initial Model with Batch size set to 10                             |
-| **7. Model with Multiple Dropout Layers and Regularization** | - Input layer with 7 units <br> - Tanh activation.<br> - Five  layers with 1, 6, 1, 6, and 6 units <br> - L2 regularization <br> - Dropout<br> - Output layer with 1 unit <br> Sigmoid activation output | As per Initial Model                                                                           | - 10 epochs<br> - Added early stopping and learning rate reduction callbacks<br> - Validation data used for training<br> - Batch size set to 32 |
-
+| Model                                                                     | Architecture                                                                                                                                                                                            | Compilation                                                                | Training                                                                                                                                        |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Initial Model**                                                      | - Three layers with 12, 8, and 4 units <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                           | - Optimizer: Adam<br> - Loss: Binary cross-entropy<br> - Metrics: Accuracy | - 100 epochs                                                                                                                                    |
+| **2. Model with One Less Hidden Layer**                                   | - Two layers with 12 and 8 units <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                                 | As per Initial Model                                                       | As per Initial Model                                                                                                                            |
+| **3. Model with Increased Units and Tanh Activation**                     | - Two layers with 300 and 200 units <br> - Tanh activation <br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                             | As per Initial Model                                                       | As per Initial Model                                                                                                                            |
+| **4. Model with Increased Units, Tanh Activation, and L2 Regularization** | - Two layers with 300 and 200 units <br> - Tanh activation <br> - L2 regularization<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                     | As per Initial Model                                                       | As per Initial Model                                                                                                                            |
+| **5. Model with Dropout and L2 Regularization**                           | - Three layers with 120, 80, and 40 units <br> - ReLU activation <br> - L2 regularization <br> - Dropout<br> - Output layer with 1 unit <br> - Sigmoid activation output                                | As per Initial Model                                                       | As per Initial Model                                                                                                                            |
+| **6. Model with One Less Hidden Layer and Batch Size**                    | - Two layers with 12 and 8 units, <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                                | As per Initial Model                                                       | As per Initial Model with Batch size set to 10                                                                                                  |
+| **7. Model with Multiple Dropout Layers and Regularization**              | - Input layer with 7 units <br> - Tanh activation.<br> - Five layers with 1, 6, 1, 6, and 6 units <br> - L2 regularization <br> - Dropout<br> - Output layer with 1 unit <br> Sigmoid activation output | As per Initial Model                                                       | - 10 epochs<br> - Added early stopping and learning rate reduction callbacks<br> - Validation data used for training<br> - Batch size set to 32 |
 
 ### 6.1 Overall model performance is printed or displayed at the end of the script
 
