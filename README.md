@@ -147,6 +147,8 @@ This project utilises data collected from the following sources:
 
 - TensorFlow. (2023). Keras Tuner. TensorFlow. Retrieved June 4, 2024, from https://www.tensorflow.org/tutorials/keras/keras_tuner
 
+- Seaborn.regplot. (2023). Retrieved June 4, 2024, from https://seaborn.pydata.org/generated/seaborn.regplot.html
+
 - Stack Exchange (2024). What is batch size in neural network? Stack Exchange. Retrieved June 6, 2024, from https://stats.stackexchange.com/questions/153531/what-is-batch-size-in-neural-network
 
 - University of Adelaide. (2023). 04-Ins_AutoOptimisation. GitLab. Retrieved June 6, 2024, from https://git.bootcampcontent.com/University-of-Adelaide/UADEL-VIRT-DATA-PT-12-2023-U-LOLC/-/tree/main/21-Neural-Networks-Deep-Learning/2/Activities/04-Ins_AutoOptimisation?ref_type=heads
