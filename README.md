@@ -1,4 +1,4 @@
-# Project-4-Group-2
+#### Project-4-Group-2
 
 # Wine Quality Evaluation
 
@@ -17,7 +17,7 @@ Imagine being able to predict how your customers would rate your product even be
 
 Our project is designed to do just that — predict public perception of wine quality based on a set of defining characteristics. This predictive insight offers a game-changing advantage over competitors. With this knowledge, you can craft more effective marketing campaigns, set optimal pricing to maximise sales, and make strategic investments in high-ROI products. Unlock these competitive advantages and propel your business to new heights with our innovative approach.
 
-### 2.1 Limitation of this project
+#### **2.1 Limitation of this project**
 
 While this project leverages an extensive dataset of over 6,000 records classified by wine experts, it focuses exclusively on the Portuguese "Vinho Verde" wine. To extend the prediction model to other wine regions, it is essential to conduct similar studies incorporating the relevant varieties of wines from those areas. This ensures that the model accurately reflects the unique characteristics and quality indicators specific to different wine types.
 
@@ -34,33 +34,33 @@ This analysis was based on CSV files downloaded from the UC Irvine Machine Learn
 
 To reproduce this project and navigate accordingly, please follow the steps below in the order they are presented:
 
-1. Load the red and white wine csv files in the Resources folder into a pandas dataframe.
-2. Add a 'Type' column to distinguish between the red and white wine types.
-3. Add a binary 'Wine Quality Categorisation' column. Wine greater than or equal to a wine quality of 6 (meaning it is a quality wine) is determined to have a binary classification of 1, all other wine is therefore classified as 0 (non-quality wine). These binary classifications were determined at the discretion of Group 2.
-4. Save combined data into a CSV file
-5. Create a new SQL Database in PostgreSQL.
-6. Create the tables in your new database using the following files from the SQL Files folder:
-   a. RedTable.sql
-   b. WhiteTable.sql
-   c. RedWhiteView.sql
-7. Import the following CSV files:
-   a. winequality-red.csv to the Red table
-   b. winequality-white.csv to the White table
-8. Run the 3.RedWhiteView.sql using PostgreSQL.
+1. Open _1.starter_code_wine.ipynb_ file in the _Code_ folder
+2. Read the winequality-red.csv and winequality-white.csv files from the _Resources_ folder into a Pandas DataFrame.
+3. Add a 'Type' column to distinguish between the red and white wine varietals.
+4. Add a binary 'Wine Quality Categorisation' column. Wine greater than or equal to a wine quality of 6 (meaning it is a quality wine) is determined to have a binary classification of 1, all other wine is therefore classified as 0 (non-quality wine). These binary classifications were determined at the discretion of Group 2.
+5. Save combined data into a combined CSV file in the _Exported_CSV_files_ folder.
+6. Create a new SQL Database called _Wine_ in PostgreSQL.
+7. Create two new queries using the Query Tool
 
-The _2.ml_model_code_wine.ipynb_ file connects to the SQL database. You must provide your username, password and port of the PostgreSQL server.
+   7a. In the first query, run _1.RedTable.sql_ from the _Exported_SQL_files_ folder. Import the _redwine_quality.csv_ file from the _Exported_CSV_files_ folder.
 
-Once it is successfully connected, the code will generate a combined wines DataFrame.
+   7b. In the second query, run _2.WhiteTable.sql_ from the _Exported_SQL_files_ folder. Import the _whitewine_quality.csv_ file from the _Exported_CSV_files_ folder.
+
+8. Run the _3.RedWhiteView.sql_ schema from the _Exported_SQL_files_ folder, this creates a union between the two tables created in Step 7.
+
+9. Open the _Code_ folder and run/save the _config.py_ file.
+
+10. Run the _2.ml_model_code_wine.ipynb_ machine learning code located in the _Code_ folder.
 
 This dataframe forms the basis of the machine learning model, refer to section 5 for futher details on the Data Model Implementation.
 
 ## 5. Data Model Implementation
 
-### 5.1 A Python script initialises, trains, and evaluates a model
+#### **5.1 A Python script initialises, trains, and evaluates a model**
 
 Numerous python scripts were engineered. The dataset was split into training (70%) and testing (30%) sets as per industry norms. The data was also converted to floats, to enable better precision and consistency assistig with ensuring compatibility with machine learning algorithms.The various models were trained on the training data with various levels of epochs.
 
-### 5.2 The data is cleaned, normalised, and standardised prior to modelling
+#### **5.2 The data is cleaned, normalised, and standardised prior to modelling**
 
 The wines data frame is cleaned to remove columns not utilised by the machine learning model, being:
 
@@ -72,23 +72,25 @@ Data is then split into features and target arrays. The X DataFrame contains all
 
 StandardScaler was utilised to transform the training and test datasets, helping the machine learning algorithm to adjust the standardized data to make it more reliable and easier to work with.
 
-### 5.3 The model utilises data retrieved from SQL or Spark
+After initial attempts at cleaning, normalising and standardising the data prior to modelling did not result in the desired result, the 'Binning Method' was then utilisied. Refer to section **6.4**.
 
-As outlined in section 4, Red and White wine sql scripts were generated to create tables with columns corresponding to various wine properties.
+#### **5.3 The model utilises data retrieved from SQL or Spark**
+
+As outlined in section 4, Red and White wine SQL scripts were generated to create tables with columns corresponding to various wine properties.
 
 SQL was utilised in order to efficiently store and query data the data before running through the machine learning model, ensuring the data integrity is maintained and enabling collaboration between the team.
 
-### 5.4 The model demonstrates meaningful predictive power at least 75% classification accuracy or 0.80 R-squared.
+#### **5.4 The model demonstrates meaningful predictive power at least 75% classification accuracy or 0.80 R-squared.**
 
-Numerous amounts of trial and error transpired using different machine learning model parameters. Although there were instances of an accuracy score of 75% obtained, the models could not consistently obtain such a score, albeit close to the desired meaningful predictive power classification accuracy.
+Numerous amounts of trial and error transpired using different machine learning model parameters. Although there were instances of an accuracy score of 75% obtained, the models could not consistently obtain such a score. After changing the approach and using the 'Binning Method' an accuracy score above 75% was consistently achieved. Refer to section **6.4**.
 
 ## 6. Data Model Optimisation
 
-### 6.1 The model optimisation and evaluation process showing iterative changes made to the model and the resulting changes in model performance is documented in either a CSV/Excel table or in the Python script itself
+#### **6.1 The model optimisation and evaluation process showing iterative changes made to the model and the resulting changes in model performance is documented in either a CSV/Excel table or in the Python script itself**
 
 A summary of some of the attempts is outlined in the table below. This shows the evolution of the machine learning code and different techniques used to achieve an accuracy score over 75%.
 
-| Attempt                                                                     | Architecture                                                                                                                                                                                            | Compilation                                                                | Training                                                                                                                                        |
+| Attempt                                                                   | Architecture                                                                                                                                                                                            | Compilation                                                                | Training                                                                                                                                        |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1. Initial Model**                                                      | - Three layers with 12, 8, and 4 units <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                           | - Optimizer: Adam<br> - Loss: Binary cross-entropy<br> - Metrics: Accuracy | - 100 epochs                                                                                                                                    |
 | **2. Model with One Less Hidden Layer**                                   | - Two layers with 12 and 8 units <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                                 | As per Initial Model                                                       | As per Initial Model                                                                                                                            |
@@ -98,30 +100,29 @@ A summary of some of the attempts is outlined in the table below. This shows the
 | **6. Model with One Less Hidden Layer and Batch Size**                    | - Two layers with 12 and 8 units, <br> - ReLU activation<br> - Output layer with 1 unit <br> - Sigmoid activation output                                                                                | As per Initial Model                                                       | As per Initial Model with Batch size set to 10                                                                                                  |
 | **7. Model with Multiple Dropout Layers and Regularization**              | - Input layer with 7 units <br> - Tanh activation.<br> - Five layers with 1, 6, 1, 6, and 6 units <br> - L2 regularization <br> - Dropout<br> - Output layer with 1 unit <br> Sigmoid activation output | As per Initial Model                                                       | - 10 epochs<br> - Added early stopping and learning rate reduction callbacks<br> - Validation data used for training<br> - Batch size set to 32 |
 
-### 6.2 Overall model performance is printed or displayed at the end of the script
+#### **6.2 Overall model performance is printed or displayed at the end of the script**
 
 Each iteration of the machine learning code used model loss and model accuracy evaluation code using the test data set in order to determine the models accuracy. This would assist in determining whether the trial and error was working, and inform updates to try and improve the accuracy. After altering the model various time with different architecture, consistently obtaining a score above 75% was not attainable.
 
-### 6.3 Hypermodel build
+#### **6.3 Hypermodel build**
 
-Hyperparameter tuning code was written using Keras Tuner's Random Search. This indicated the most optimal hyper model, by providing tunable hidden and output layers. The tuner searched the optimal hyperparameters by training on X_train and y_train data. It was reassuring that based on the data, a model over 75% was achievable. This utlimately led the group to investigate optimising the model through 'binning'
+Hyperparameter tuning code was written using Keras Tuner's Random Search, refer to _3.ml_model_code_correlation_hyperparamenter_tests.ipynb_ in the \_CodeO folder. This indicated the most optimal hyper model, by providing tunable hidden and output layers. The tuner searched the optimal hyperparameters by training on X_train and y_train data. It was reassuring that based on the data, a model over 75% was achievable, however using the parameters from the hyper model (section **6.1 - Model 7**) we could not achieve this on our own accord. This utlimately led the group to investigate optimising the model through 'Binning', refer to section **6.4**.
 
-### 6.4 Optimum Model - Binning method
+#### **6.4 Optimum Model - Binning method**
 
-Binning was utilised to try and improve the neural network model's performance. The logic behind the use of binning was to still efficiently capture patterns and trends in the data, reducing possibleoverfitting, and mitigating the impact of outliers, and skewed distributions. 
+Binning was utilised to try and improve the neural network model's performance. The logic behind the use of binning was to still efficiently capture patterns and trends in the data, reducing possibleoverfitting, and mitigating the impact of outliers, and skewed distributions.
 
 The proess by which this was undertaken is summarised in the table below.
 
-| Process                                | Analysis                                                                                             |
-|----------------------------------------|------------------------------------------------------------------------------------------------------|
-| **1. Binning Data**                    | - Define bin edges and create new column for `free_sulfur_dioxide`, `density`, and `residual_sugar` features.<br> - Perform binning and create new columns: `free_sulfur_binned`, `density_binned`, `sugar_binned`.    |
-| **2. Cleaning Data**                   | - Remove unnecessary columns: `free_sulfur_dioxide`, `density`, `free_sulfur_binned`, `density_binned`, `residual_sugar`, `sugar_binned`.<br> - Display the cleaned dataframe. |
-| **3. Encoding Binned Columns**         | - Encode the binned columns: `free_sulfur_binned`, `density_binned`, `sugar_binned`.<br> - Concatenate the encoded columns with the cleaned dataframe.        |
-| **4. Preparing Data for Modeling**     | - Split  data into features (`X`) and target (`y`).<br> - Standardize using `StandardScaler`.<br> - Split data into training and testing sets.  |
-| **5. Building and Training the Model** | - Define a neural network model with two hidden layers (200 and 150 units) and 'relu' activation. <br> - Output layer using `sigmoid` activation.<br> - Compile the model using the Adam optimizer, binary cross-entropy loss function, and accuracy metrics.<br> - Train the model on the training data for 100 epochs.<br> - Evaluate the model on the test data and output the loss and accuracy.  |
+| Process                                | Analysis                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Binning Data**                    | - Define bin edges and create new column for `free_sulfur_dioxide`, `density`, and `residual_sugar` features.<br> - Perform binning and create new columns: `free_sulfur_binned`, `density_binned`, `sugar_binned`.                                                                                                                                                                                  |
+| **2. Cleaning Data**                   | - Remove unnecessary columns: `free_sulfur_dioxide`, `density`, `free_sulfur_binned`, `density_binned`, `residual_sugar`, `sugar_binned`.<br> - Display the cleaned dataframe.                                                                                                                                                                                                                       |
+| **3. Encoding Binned Columns**         | - Encode the binned columns: `free_sulfur_binned`, `density_binned`, `sugar_binned`.<br> - Concatenate the encoded columns with the cleaned dataframe.                                                                                                                                                                                                                                               |
+| **4. Preparing Data for Modeling**     | - Split data into features (`X`) and target (`y`).<br> - Standardize using `StandardScaler`.<br> - Split data into training and testing sets.                                                                                                                                                                                                                                                        |
+| **5. Building and Training the Model** | - Define a neural network model with two hidden layers (200 and 150 units) and 'relu' activation. <br> - Output layer using `sigmoid` activation.<br> - Compile the model using the Adam optimizer, binary cross-entropy loss function, and accuracy metrics.<br> - Train the model on the training data for 100 epochs.<br> - Evaluate the model on the test data and output the loss and accuracy. |
 
 The approach of binning the wine data led to an improved model accuracy score, successfully consistently surpassing 75%, which had not been achieved in previous attempts.
-
 
 ## 7. Conclusion
 
@@ -133,13 +134,13 @@ In conclusion, the various approaches to writing the neural network machine lear
 
 ## 8. References
 
-### 8.1 Primary Data Source
+#### **8.1 Primary Data Source**
 
 This project utilises data collected from the following sources:
 
 - Cortez,Paulo, Cerdeira,A., Almeida,F., Matos,T., and Reis,J.. (2009). Wine Quality. UCI Machine Learning Repository. https://doi.org/10.24432/C56S3T.
 
-### 8.2 Other References
+#### **8.2 Other References**
 
 - edX Boot Camps. (2024). Xpert Learning Assistant. Retrieved June 4, 2024, from https://bootcampspot.instructure.com/courses/4781/external_tools/313
 
